@@ -1,23 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import JsonData from './DATA.json'
+import React,{useState} from 'react';
 
 function App() {
+  const [inputvalue, setInputvalue] = useState("");
+  console.log(inputvalue);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <input value={inputvalue} onChange={(event)=>setInputvalue(event.target.value)} className='searchbar' type="text" placeholder='search...' />
+      {JsonData.filter(data =>{
+        if (inputvalue === "") {
+          return data
+        }else if (data.first_name.toLowerCase() === inputvalue.toLowerCase()) {
+          return data
+        }
+      }).map((val, key)=> {
+        return <div key={key}>
+          <p>
+          {val.first_name}
+          </p>
+        </div>
+      })}
     </div>
   );
 }
